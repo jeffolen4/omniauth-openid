@@ -43,7 +43,7 @@ module OmniAuth
         i = nil if i == ''
         i
       end
-      
+
       def request_phase
         identifier ? start : get_identifier
       end
@@ -84,7 +84,9 @@ module OmniAuth
       def openid_response
         unless @openid_response
           openid = Rack::OpenID.new(lambda{|env| [200,{},[]]}, options[:store])
+          Rails.logger.info("<<<<<<<<< openid env before: #{env.inspect}")
           openid.call(env)
+          Rails.logger.info("<<<<<<<<< openid env after: #{env.inspect}")
           @openid_response = env.delete('rack.openid.response')
         end
         @openid_response
