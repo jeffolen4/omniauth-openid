@@ -27,6 +27,8 @@ module OmniAuth
       option :store, ::OpenID::Store::Memory.new
       option :identifier, nil
       option :identifier_param, 'openid_url'
+      option :client_options, {:proxy => "http://egress-proxy001.zhv.zenimaxonline.com:3128"} #ENV['http_proxy'] ? URI(ENV['http_proxy']) : nil}
+
 
       def dummy_app
         lambda{|env| [401, {"WWW-Authenticate" => Rack::OpenID.build_header(
